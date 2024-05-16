@@ -24,7 +24,7 @@ class Mainscreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: Height * 0.60, left: Width * 0.05, right: Width * 0.05),
+            padding: EdgeInsets.only(top: Height * 0.57, left: Width * 0.05, right: Width * 0.05),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
