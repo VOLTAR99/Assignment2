@@ -9,12 +9,60 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final textController = TextEditingController();
+  List<String> coffeeTypes = ['Cappuccino', 'Machiato', 'Latte', 'Americano'];
+  List<Color> coffeeColors = List.generate(4, (index) => Colors.white);
+  int selectedIndex = -1;
+  int _selectedPageIndex = 0;
+
+  void toggleSelectedIndex(int index) {
+    setState(() {
+      if (selectedIndex == index) {
+        selectedIndex = -1;
+      } else {
+        selectedIndex = index;
+      }
+    });
+  }
+  void _selectPage(int index) {
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: const Color(0xFFF9F9F9) ,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          selectedItemColor: const Color(0xFFC67C4E),
+          unselectedItemColor: const Color.fromARGB(255, 81, 81, 81),
+          onTap: _selectPage,
+          currentIndex: _selectedPageIndex,
+          items: [
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage('assets/icons/Home.png')),
+                label: ''),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage('assets/icons/Heart.png')),
+                label: ''),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage('assets/icons/Bag.png')), label: ''),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage('assets/icons/Notification.png')),
+                label: ''),
+          ],
+        ),
+      ),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -24,11 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: Height * 0.35,
                   width: Width,
                   color: const Color.fromARGB(255, 39, 39, 39)),
-              Container(
-                height: Height * 0.65,
-                width: Width,
-                color: Colors.white,
-              )
             ],
           ),
           Column(
@@ -204,6 +247,54 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: Height * 0.03,
+                    left: Width * 0.07,
+                    right: Width * 0.07),
+                child: Container(
+                  height: Height * 0.06,
+                  width: Width * 0.85,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: coffeeTypes.length,
+                    separatorBuilder: (context, index) => SizedBox(
+                      width: Width * 0.03,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            toggleSelectedIndex(index);
+                          });
+                        },
+                        child: Container(
+                          height: Height * 0.06,
+                          width: Width * 0.30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: selectedIndex == index
+                                ? Color(0xFFC67C4E)
+                                : Colors.white,
+                          ),
+                          child: Center(
+                            child: Text(
+                              coffeeTypes[index],
+                              style: TextStyle(
+                                color: selectedIndex == index
+                                    ? Colors.white
+                                    : const Color.fromARGB(255, 58, 58, 58),
+                                fontFamily: 'SoraMedium',
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               )
