@@ -1,3 +1,4 @@
+import 'package:assignment2/DetailItem.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -322,10 +323,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisCount: 2,
                         childAspectRatio: 3 / 4.4,
                         children: [
-                          GridContainer(
-                            text1: 'with Chocolate',
-                            text2: '4.53',
-                            Image: 'assets/Rectangle1706.png',
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Detailitem()));
+                            },
+                            child: GridContainer(
+                              text1: 'with Chocolate',
+                              text2: '4.53',
+                              Image: 'assets/Rectangle1706.png',
+                            ),
                           ),
                           GridContainer(
                             text1: 'with Oat Milk',
